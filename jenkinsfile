@@ -1,31 +1,19 @@
-node('workers'){
-  try {
+pipeline {
+  agent any 
 
-    stage('Checkout'){
-      checkout scm
-    }
-    stage('Quality Test'){
-      echo "Running quality tests"
-    }
-    stage('Security Test'){
-      echo "Running security tests"
-    }
-    stage('Build'){
-      echo "Building artifacts"
-    }
-    stage('Push'){
-      echo "Storing artifacts"
-    }
-    stage('Deploy'){
-      echo "Deploying artifacts"
-    }
-    stage('Acceptance Tests'){
-      echo "Running post-integrations tests"
+  stages {
+    stage('Build') {
+      steps {
+        sh 'mvn clean package'
+      }
+      post {
+        success {
+          echo 'now archiving....'
+          archiveArtifacts artifacts: '**/target/*.war'
+        }
+      }
     }
 
-  } catch(error){
-      echo "Handling errors"
-  } finally {
-      echo "Cleaning up"
   }
+
 }
