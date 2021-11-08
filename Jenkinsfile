@@ -20,6 +20,11 @@ pipeline {
         }
       }
     }
+    stage('Deploy to dev'){
+      steps {
+        build job: 'udemy-maven-deploy-to-dev'
+      }
+    }
 
   }
 }
