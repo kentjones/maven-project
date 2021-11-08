@@ -1,5 +1,12 @@
 pipeline {
-  agent any 
+  agent any
+
+  tools {
+    maven 'Maven-3.8.3'
+  }
+  options {
+    timestamps()
+  } 
 
   stages {
     stage('Build') {
