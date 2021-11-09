@@ -25,8 +25,7 @@ pipeline {
     }
     stage('Deploy to Dev'){
       steps {
-        echo "deploying to ${tomcat_dev}"
-        build job: 'udemy-maven-deploy-to-dev'
+        build job: 'maven-deploy-to-dev'
       }
     }
   }
