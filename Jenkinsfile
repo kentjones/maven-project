@@ -1,12 +1,15 @@
 pipeline {
   agent any
-
+  parameters{
+      string(name: 'tomcat_dev', defaultValue: 'laptop:8010', description: 'Tomcat development server')
+      string(name: 'tomcat_prod', defaultValue: 'laptop:9010', description: 'Tomcat production server')
+  }
+  triggers{
+      pollSCM('* * * * *')
+  }
   tools {
     maven 'Maven-3.8.3'
   }
-  options {
-    timestamps()
-  } 
 
   stages {
     stage('Build') {
@@ -20,11 +23,11 @@ pipeline {
         }
       }
     }
-    stage('Deploy to dev'){
+    stage('Deploy to Dev'){
       steps {
+        echo "deploying to ${tomcat_dev}"
         build job: 'udemy-maven-deploy-to-dev'
       }
     }
-
   }
 }
